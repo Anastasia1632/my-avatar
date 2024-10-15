@@ -18,9 +18,9 @@ index.html
         // Szene und Kamera erstellen
         const scene = new THREE.Scene();
         
-        // Kamera weiter nach vorne und oben positionieren
+        // Kamera näher und höher positioniert
         const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        camera.position.set(0, 1.6, 1.8);  // Kamera näher am Modell und höher
+        camera.position.set(0, 1.6, 1.8);  // Kamera in guter Position
 
         // Renderer erstellen
         const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -40,9 +40,9 @@ index.html
         loader.load('https://models.readyplayer.me/66b9ef8a79bf32ac3f5d16fe.glb', function(gltf) {
             const model = gltf.scene;
             
-            // Modell größer machen und weiter nach oben verschieben
+            // Modellgröße und Position anpassen
             model.scale.set(1.5, 1.5, 1.5);  // Avatar um 50% größer machen
-            model.position.y = -0.3;  // Avatar leicht nach oben verschieben
+            model.position.y = -0.4;  // Avatar leicht nach unten verschieben, damit der Kopf nicht abgeschnitten ist
 
             scene.add(model);
         }, undefined, function(error) {
