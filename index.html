@@ -14,12 +14,24 @@ index.html
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/GLTFLoader.js"></script>
     <script>
+        // Szene erstellen
         const scene = new THREE.Scene();
+
+        // Kamera erstellen und weiter weg positionieren
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        camera.position.z = 5;  // Kamera weiter nach hinten setzen
+
+        // Renderer erstellen
         const renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
 
+        // Licht hinzufügen (um das Modell zu beleuchten)
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(0, 1, 1).normalize();
+        scene.add(light);
+
+        // GLTF Loader erstellen und das Modell laden
         const loader = new THREE.GLTFLoader();
         loader.load( 'https://models.readyplayer.me/66b9ef8a79bf32ac3f5d16fe.glb', function ( gltf ) {
             scene.add( gltf.scene );
@@ -27,13 +39,21 @@ index.html
             console.error( error );
         } );
 
-        camera.position.z = 2;
-
+        // Animationsschleife
         function animate() {
             requestAnimationFrame( animate );
             renderer.render( scene, camera );
         }
         animate();
+
+        // Bei Größenänderung des Fensters anpassen
+        window.addEventListener( 'resize', function() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            renderer.setSize( width, height );
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
     </script>
 </body>
 </html>
