@@ -18,10 +18,10 @@ index.html
     <script>
         // Szene und Kamera erstellen
         const scene = new THREE.Scene();
+        
+        // Kamera auf Gesichtshöhe positionieren und weiter nach vorne rücken
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-        // Kamera näher am Avatar positionieren für Oberkörperansicht
-        camera.position.set(0, 1.2, 0.8); // Kamera sehr nah heranrücken und leicht nach oben schieben
+        camera.position.set(0, 1.5, 1.5);  // Auf Gesichtshöhe (y=1.5) und etwas weiter nach vorne (z=1.5)
 
         // Renderer erstellen
         const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -48,8 +48,8 @@ index.html
             const model = gltf.scene;
             
             // Modellgröße und Position anpassen
-            model.scale.set(1.2, 1.2, 1.2); // Avatar etwas größer machen
-            model.position.y = -1.5; // Avatar weiter nach unten verschieben, um nur den Oberkörper zu zeigen
+            model.scale.set(1.2, 1.2, 1.2);  // Avatar etwas größer machen
+            model.position.y = -1.0;  // Avatar nach unten verschieben, um Oberkörper zentriert zu zeigen
 
             scene.add(model);
         }, undefined, function(error) {
