@@ -13,41 +13,47 @@ index.html
 <body>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
-        // Szene erstellen
-        const scene = new THREE.Scene();
+    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/controls/OrbitControls.js"></script>
 
-        // Kamera erstellen und weiter weg positionieren, damit der Avatar komplett sichtbar ist
+    <script>
+        // Szene und Kamera erstellen
+        const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        camera.position.set(0, 1.6, 3);  // Kamera höher setzen, um den Avatar vollständig zu sehen
+        camera.position.set(0, 1.6, 3); // Kameraeinstellung
 
         // Renderer erstellen
         const renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
 
-        // Umgebungslicht hinzufügen
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        // Steuerungen hinzufügen (OrbitControls)
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = false;
+
+        // Beleuchtung hinzufügen
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.5); // Starkes Umgebungslicht
         scene.add(ambientLight);
 
-        // Richtungslicht hinzufügen
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(1, 1, 1).normalize();
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1); // Richtungslicht
+        directionalLight.position.set(1, 1, 0.5).normalize();
         scene.add(directionalLight);
 
-        // GLTF Loader erstellen und das Modell laden
+        // GLTF Loader für Avatar laden
         const loader = new THREE.GLTFLoader();
-        loader.load( 'https://models.readyplayer.me/66b9ef8a79bf32ac3f5d16fe.glb', function ( gltf ) {
+        loader.load('https://models.readyplayer.me/66b9ef8a79bf32ac3f5d16fe.glb', function(gltf) {
             const model = gltf.scene;
-            model.scale.set(1, 1, 1);  // Größe des Modells anpassen
-            scene.add( model );
-        }, undefined, function ( error ) {
-            console.error( error );
-        } );
+            model.scale.set(1, 1, 1); // Avatar in Originalgröße
+            scene.add(model);
+        }, undefined, function(error) {
+            console.error(error);
+        });
 
         // Animationsschleife
         function animate() {
             requestAnimationFrame( animate );
+            controls.update(); // Für Kamerasteuerung
             renderer.render( scene, camera );
         }
         animate();
