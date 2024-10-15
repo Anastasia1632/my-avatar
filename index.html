@@ -20,8 +20,8 @@ index.html
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-        // Kamera für Oberkörper-Ansicht näher am Avatar positionieren
-        camera.position.set(0, 1.6, 1.5); // Kamera näher setzen für Oberkörperansicht
+        // Kamera näher am Avatar positionieren für Oberkörperansicht
+        camera.position.set(0, 1.2, 0.8); // Kamera sehr nah heranrücken und leicht nach oben schieben
 
         // Renderer erstellen
         const renderer = new THREE.WebGLRenderer({ alpha: true });
@@ -32,7 +32,7 @@ index.html
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.25;
-        controls.enableZoom = true;
+        controls.enableZoom = false;
 
         // Beleuchtung hinzufügen
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
@@ -47,11 +47,9 @@ index.html
         loader.load('https://models.readyplayer.me/66b9ef8a79bf32ac3f5d16fe.glb', function(gltf) {
             const model = gltf.scene;
             
-            // Modell leicht vergrößern
-            model.scale.set(1.2, 1.2, 1.2); // Avatar um 20% größer machen
-
-            // Position des Modells leicht anpassen (nach unten verschieben, damit der Oberkörper besser sichtbar ist)
-            model.position.y = -0.8;
+            // Modellgröße und Position anpassen
+            model.scale.set(1.2, 1.2, 1.2); // Avatar etwas größer machen
+            model.position.y = -1.5; // Avatar weiter nach unten verschieben, um nur den Oberkörper zu zeigen
 
             scene.add(model);
         }, undefined, function(error) {
@@ -77,4 +75,3 @@ index.html
     </script>
 </body>
 </html>
-
