@@ -13,7 +13,6 @@ index.html
 <body>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.126.1/examples/js/controls/OrbitControls.js"></script>
 
     <script>
         // Szene und Kamera erstellen
@@ -21,19 +20,12 @@ index.html
         
         // Kamera auf Gesichtshöhe positionieren und frontal blicken lassen
         const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        camera.position.set(0, 1.5, 2);  // Kamera vor dem Avatar positionieren
+        camera.position.set(0, 1.6, 2.5);  // Kamera etwas höher und weiter weg positioniert
 
         // Renderer erstellen
         const renderer = new THREE.WebGLRenderer({ alpha: true });
         renderer.setSize( window.innerWidth, window.innerHeight );
         document.body.appendChild( renderer.domElement );
-
-        // OrbitControls für Steuerung hinzufügen
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.25;
-        controls.enableZoom = false;
-        controls.target.set(0, 1.5, 0);  // Ziel auf die Mitte des Oberkörpers (Gesichtshöhe)
 
         // Beleuchtung hinzufügen
         const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
@@ -50,7 +42,7 @@ index.html
             
             // Modellgröße und Position anpassen
             model.scale.set(1.2, 1.2, 1.2);  // Avatar etwas größer machen
-            model.position.y = -1.2;  // Avatar etwas nach unten verschieben
+            model.position.y = -0.5;  // Modell weiter nach oben verschieben, um den Oberkörper besser anzuzeigen
 
             scene.add(model);
         }, undefined, function(error) {
@@ -60,7 +52,6 @@ index.html
         // Animationsschleife
         function animate() {
             requestAnimationFrame( animate );
-            controls.update();
             renderer.render( scene, camera );
         }
         animate();
@@ -76,4 +67,3 @@ index.html
     </script>
 </body>
 </html>
-
